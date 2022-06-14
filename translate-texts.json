@@ -1,0 +1,12 @@
+{
+    "errors": {
+        "NO_DATA": {
+            "pt": "Nenhuma informação foi encontrada.",
+            "en": "No data found."
+        },
+        "BOT_ID": {
+            "pt": "É necessário o ID de um bot para usar este método.",
+            "en": "It's necessary the Bot ID to use this method."
+        }
+    }
+}
