@@ -26,19 +26,27 @@ interface BotRestart {
     message: string
 }
 
+type AcceptedVersions = "v1" | "v2"
 type Languages = "en" | "pt"
 
 export class DiscloudAPI {
 
-    private token: string
-    private lang: Languages
-    constructor(token: string, options?: { lang?: Languages }) {
+    private readonly token: string
+    private readonly lang: Languages
+    private readonly version: AcceptedVersions
+    constructor(token: string, options?: { lang?: Languages, version?: AcceptedVersions }) {
         this.token = token
         this.lang = options?.lang ? options.lang : "en"
+        this.version = options?.version ? options.version : "v2"
     }
 
     private url = "https://discloud.app/api/v2"
-    private error = new Errors()
+    private readonly error = new Errors()
+
+    private selectVersion() {
+        this.version == "v1" ? this.url = "https://discloud.app/status" : this.url = "https://discloud.app/api/v2"
+        return this.url
+    }
 
     /**
      * @author GardZock
@@ -47,7 +55,7 @@ export class DiscloudAPI {
      */
     public async userStatus(): Promise<UserStatus | void> {
         
-        const data = (await axios.get(`${this.url}/user`, {
+        const data = (await axios.get(`${this.selectVersion()}/user`, {
             headers: {
                 "api-token": `${this.token}`
             }
@@ -68,7 +76,7 @@ export class DiscloudAPI {
 
             if (!bot_id) return this.error.newError("BOT_ID", this.lang)
 
-            const data = (await axios.get(`${this.url}app/${bot_id}`, {
+            const data = (await axios.get(`${this.selectVersion()}${this.version == "v1" ? "/bot/" : "/app/"}/${bot_id}`, {
                 headers: {
                     "api-token": `${this.token}`
                 }
@@ -88,7 +96,7 @@ export class DiscloudAPI {
 
             if (!bot_id) return this.error.newError("BOT_ID", this.lang)
 
-            const data = (await axios.get(`${this.url}app/${bot_id}/logs`, {
+            const data = (await axios.get(`${this.selectVersion()}${this.version == "v1" ? "/bot/" : "/app/"}${bot_id}/logs`, {
                 headers: {
                     "api-token": `${this.token}`
                 }
@@ -108,7 +116,7 @@ export class DiscloudAPI {
 
             if (!bot_id) return this.error.newError("BOT_ID", this.lang)
 
-            const data = (await axios.post(`${this.url}app/${bot_id}/restart`, {
+            const data = (await axios.post(`${this.selectVersion()}${this.version == "v1" ? "/bot/" : "/app/"}${bot_id}/restart`, {
                 headers: {
                     "api-token": `${this.token}`
                 }

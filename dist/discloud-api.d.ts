@@ -19,15 +19,19 @@ interface BotRestart {
     status: string;
     message: string;
 }
+declare type AcceptedVersions = "v1" | "v2";
 declare type Languages = "en" | "pt";
 export declare class DiscloudAPI {
-    private token;
-    private lang;
+    private readonly token;
+    private readonly lang;
+    private readonly version;
     constructor(token: string, options?: {
         lang?: Languages;
+        version?: AcceptedVersions;
     });
     private url;
-    private error;
+    private readonly error;
+    private selectVersion;
     /**
      * @author GardZock
      * @description Get status of user.
