@@ -54,12 +54,20 @@ export class DiscloudAPI {
      * @return {Promise<UserStatus | void>}
      */
     public async userStatus(): Promise<UserStatus | void> {
-        
-        const data = (await axios.get(`${this.selectVersion()}/user`, {
-            headers: {
-                "api-token": `${this.token}`
-            }
-        })).data
+
+        let data;
+        try {
+            data = (await axios.get(`${this.selectVersion()}/user`, {
+                headers: {
+                    "api-token": `${this.token}`
+                }
+            })).data
+        } catch (err: any) {
+            if (err.code == 401) {
+                    return this.error.newError("UNAUTHORIZED", this.lang)
+                }
+                return console.error(err)
+        }
         if (!data) return this.error.newError("NO_DATA", this.lang)
 
         return data;
@@ -76,13 +84,22 @@ export class DiscloudAPI {
 
             if (!bot_id) return this.error.newError("BOT_ID", this.lang)
 
-            const data = (await axios.get(`${this.selectVersion()}${this.version == "v1" ? "/bot/" : "/app/"}/${bot_id}`, {
-                headers: {
-                    "api-token": `${this.token}`
+            let data;
+            try {
+                data = (await axios.get(`${this.selectVersion()}${this.version == "v1" ? "/bot/" : "/app/"}/${bot_id}`, {
+                    headers: {
+                        "api-token": `${this.token}`
+                    }
+                })).data
+            } catch (err: any) {
+                if (err.code == 401) {
+                    return this.error.newError("UNAUTHORIZED", this.lang)
                 }
-            })).data
+                return console.error(err)
+            }
+
             if (!data) return this.error.newError("NO_DATA", this.lang)
-    
+
             return data;
         },
 
@@ -96,13 +113,22 @@ export class DiscloudAPI {
 
             if (!bot_id) return this.error.newError("BOT_ID", this.lang)
 
-            const data = (await axios.get(`${this.selectVersion()}${this.version == "v1" ? "/bot/" : "/app/"}${bot_id}/logs`, {
-                headers: {
-                    "api-token": `${this.token}`
+            let data;
+            try {
+                data = (await axios.get(`${this.selectVersion()}${this.version == "v1" ? "/bot/" : "/app/"}${bot_id}/logs`, {
+                    headers: {
+                        "api-token": `${this.token}`
+                    }
+                })).data
+            } catch (err: any) {
+                if (err.code == 401) {
+                    return this.error.newError("UNAUTHORIZED", this.lang)
                 }
-            })).data
+                return console.error(err)
+            }
+
             if (!data) return this.error.newError("NO_DATA", this.lang)
-    
+
             return data;
         },
 
@@ -116,13 +142,22 @@ export class DiscloudAPI {
 
             if (!bot_id) return this.error.newError("BOT_ID", this.lang)
 
-            const data = (await axios.post(`${this.selectVersion()}${this.version == "v1" ? "/bot/" : "/app/"}${bot_id}/restart`, {
-                headers: {
-                    "api-token": `${this.token}`
+            let data;
+            try {
+                data = (await axios.post(`${this.selectVersion()}${this.version == "v1" ? "/bot/" : "/app/"}${bot_id}/restart`, {
+                    headers: {
+                        "api-token": `${this.token}`
+                    }
+                })).data
+            } catch (err: any) {
+                if (err.code == 401) {
+                    return this.error.newError("UNAUTHORIZED", this.lang)
                 }
-            })).data
+                return console.error(err)
+            }
+
             if (!data) return this.error.newError("NO_DATA", this.lang)
-    
+
             return data;
         }
     }

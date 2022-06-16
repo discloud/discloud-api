@@ -7,6 +7,10 @@
         "BOT_ID": {
             "pt": "É necessário o ID de um bot para usar este método.",
             "en": "It's necessary the Bot ID to use this method."
+        },
+        "UNAUTHORIZED": {
+            "pt": "Você não foi autorizado, porfavor cheque seu token.",
+            "en": "You are unauthorized, please check your token."
         }
     }
 }
