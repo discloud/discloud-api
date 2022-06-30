@@ -7,42 +7,52 @@ This is a unofficial NPM Package of Discloud API.
 const api = new DiscloudAPI('Your Token')
 ```
 
-> User
-  - [User Status](#user-status)
+# Functions
 
-> Bot
-  - [Get Bot](#get-bot)
-  - [Get Logs of Bot](#get-logs-of-bot)
-  - [Restart the Bot](#restart-the-bot)
+<dl>
+<dt><a href="#get">get(bot_id)</a> ⇒ <code>Promise.&lt;(GetBot|void)&gt;</code></dt>
+<dd><p>Get data of a bot.</p>
+</dd>
+<dt><a href="#logs">logs(bot_id)</a> ⇒ <code>Promise.&lt;(BotLogs|void)&gt;</code></dt>
+<dd><p>Get log of a bot.</p>
+</dd>
+<dt><a href="#restart">restart(bot_id)</a> ⇒ <code>Promise.&lt;(BotRestart|void)&gt;</code></dt>
+<dd><p>Restart the bot.</p>
+</dd>
+</dl>
 
-## User Status
+<a name="get"></a>
 
-```js
-...
+## get(bot_id) ⇒ <code>Promise.&lt;(GetBot\|void)&gt;</code>
+Get data of a bot.
 
-const data = await (DiscloudAPI).userStatus()
-//Returns the user data.
-```
+**Kind**: global function
+**Author**: GardZock
 
-## BOT
+| Param | Type | Description |
+| --- | --- | --- |
+| bot_id | <code>string</code> | ID of Bot |
 
-### Get Bot
-```js
-...
-const bot = await (DiscloudAPI).bot.get('bot id')
-//Returns the bot data.
-```
+<a name="logs"></a>
 
-### Get Logs of Bot
-```js
-...
-const logs = await (DiscloudAPI).bot.logs('bot id')
-//Returns the logs of bot.
-```
+## logs(bot_id) ⇒ <code>Promise.&lt;(BotLogs\|void)&gt;</code>
+Get log of a bot.
 
-### Restart the Bot
-```js
-...
-const restart = await (DiscloudAPI).bot.restart('bot id')
-//Returns a message if sucess, if not return a error.
-```
+**Kind**: global function
+**Author**: GardZock
+
+| Param | Type | Description |
+| --- | --- | --- |
+| bot_id | <code>string</code> | ID of Bot |
+
+<a name="restart"></a>
+
+## restart(bot_id) ⇒ <code>Promise.&lt;(BotRestart\|void)&gt;</code>
+Restart the bot.
+
+**Kind**: global function
+**Author**: GardZock
+
+| Param | Type | Description |
+| --- | --- | --- |
+| bot_id | <code>string</code> | ID of Bot |
