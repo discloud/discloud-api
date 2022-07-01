@@ -14,7 +14,7 @@ const api = new DiscloudAPI('Your Token')
 # Functions
 
 <dl>
-<dt><a href="#userStatus">userStatus() ⇒ <code>Promise.&lt;(UserStatus|void)&gt;</code></dt>
+<dt><a href="#userStatus">userStatus()</a> ⇒ <code>Promise.&lt;(UserStatus|void)&gt;</code></dt>
 <dd><p>Get status of user.</p>
 </dd>
 <dt><a href="#get">get(bot_id)</a> ⇒ <code>Promise.&lt;(GetBot|void)&gt;</code></dt>
