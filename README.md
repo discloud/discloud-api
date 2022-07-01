@@ -1,7 +1,7 @@
 # Discloud-API
 This is a unofficial NPM Package of Discloud API.
 
-[![NPM_DOWNLOADS](https://img.shields.io/npm/dm/discloud-api)](https://nodei.co/npm/discloud-api/)    [![NPM_LICENSE](https://img.shields.io/npm/l/discloud-api)](https://nodei.co/npm/discloud-api/)     [![NPM_VERSION](https://img.shields.io/npm/v/discloud-api)](https://nodei.co/npm/discloud-api/)     [![PULL_REQUESTS](https://img.shields.io/github/issues-pr/GardZock/Discloud-API)](https://github.com/GardZock/Discloud-API/pulls)
+[![BUILD](https://img.shields.io/github/workflow/status/GardZock/Discloud-API/CodeQL)](https://github.com/GardZock/Discloud-API/actions/workflows/codeql.yml)    [![NPM_DOWNLOADS](https://img.shields.io/npm/dm/discloud-api)](https://nodei.co/npm/discloud-api/)    [![NPM_LICENSE](https://img.shields.io/npm/l/discloud-api)](https://nodei.co/npm/discloud-api/)     [![NPM_VERSION](https://img.shields.io/npm/v/discloud-api)](https://nodei.co/npm/discloud-api/)     [![PULL_REQUESTS](https://img.shields.io/github/issues-pr/GardZock/Discloud-API)](https://github.com/GardZock/Discloud-API/pulls)
 
 [![NPM](https://nodei.co/npm/discloud-api.png)](https://nodei.co/npm/discloud-api/)
 
