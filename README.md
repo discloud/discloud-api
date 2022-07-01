@@ -14,7 +14,7 @@ const api = new DiscloudAPI('Your Token')
 # Functions
 
 <dl>
-<dt><a href="#userStatus">userStatus() ⇒ <code>Promise.&lt;(UserStatus\|void)&gt;</code></dt>
+<dt><a href="#userStatus">userStatus() ⇒ <code>Promise.&lt;(UserStatus|void)&gt;</code></dt>
 <dd><p>Get status of user.</p>
 </dd>
 <dt><a href="#get">get(bot_id)</a> ⇒ <code>Promise.&lt;(GetBot|void)&gt;</code></dt>
@@ -40,7 +40,7 @@ Get status of user.
 
 ```js
 ...
-const data = await (DiscloudAPI).userStatus()
+const data = await <(DiscloudAPI)>.userStatus()
 //Returns the user data.
 ```
 
@@ -60,7 +60,7 @@ Get data of a bot.
 
 ```js
 ...
-const bot = await (DiscloudAPI).bot.get('bot id')
+const bot = await <(DiscloudAPI)>.bot.get('bot id')
 //Returns the bot data.
 ```
 
@@ -99,6 +99,6 @@ Restart the bot.
 
 ```js
 ...
-const restart = await (DiscloudAPI).bot.restart('bot id')
+const restart = await <(DiscloudAPI)>.bot.restart('bot id')
 //Returns a message if sucess, if not return a error.
 ```
