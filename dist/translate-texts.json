@@ -11,6 +11,14 @@
         "UNAUTHORIZED": {
             "pt": "Você não foi autorizado, porfavor cheque seu token.",
             "en": "You are unauthorized, please check your token."
+        },
+        "NOT_UPDATED": {
+            "pt": "Está opção não está disponivel nesta versão.",
+            "en": "This option is not available in this version."
+        },
+        "INVALID_FILE": {
+            "pt": "Arquivo inválido ou não encontrado!",
+            "en": "Invalid or not found file!"
         }
     }
 }

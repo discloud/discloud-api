@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DiscloudAPI = void 0;
 const axios_1 = __importDefault(require("axios"));
 const error_1 = require("./error");
+const form_data_1 = __importDefault(require("form-data"));
+const fs_1 = require("fs");
 class DiscloudAPI {
     token;
     lang;
@@ -115,6 +117,40 @@ class DiscloudAPI {
                     headers: {
                         "api-token": `${this.token}`
                     }
+                })).data;
+            }
+            catch (err) {
+                if (err.code == 401) {
+                    return this.error.newError("UNAUTHORIZED", this.lang);
+                }
+                return console.error(err);
+            }
+            if (!data)
+                return this.error.newError("NO_DATA", this.lang);
+            return data;
+        },
+        /**
+        * @author GardZock
+        * @param {string} bot_id ID of Bot
+        * @param {string} path File Path
+        * @param {boolean} restart Whether the bot will restart
+        * @description Commit a file in the bot.
+        * @return {Promise<BotRestart | void>}
+        */
+        commit: async (bot_id, path, restart) => {
+            if (this.version != "v1")
+                return this.error.newError("NOT_UPDATED", this.lang);
+            if (!path.endsWith('.zip'))
+                return this.error.newError("INVALID_FILE", this.lang);
+            const form = new form_data_1.default();
+            form.append('file', (0, fs_1.createReadStream)(path));
+            const headers = form.getHeaders({
+                "api-token": `${this.token}`
+            });
+            let data;
+            try {
+                data = (await axios_1.default.post(`https://discloud.app/status/bot/${bot_id}/commit?restart=${restart}`, form, {
+                    headers: headers
                 })).data;
             }
             catch (err) {

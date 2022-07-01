@@ -1,6 +1,6 @@
 import { errors } from './translate-texts.json'
 
-type ErrorType = "NO_DATA" | "BOT_ID" | "UNAUTHORIZED"
+type ErrorType = "NO_DATA" | "BOT_ID" | "UNAUTHORIZED" | "NOT_UPDATED" | "INVALID_FILE"
 type Languages = "en" | "pt"
 
 export class Errors {

@@ -60,6 +60,15 @@ export declare class DiscloudAPI {
         * @return {Promise<BotRestart | void>}
         */
         restart: (bot_id: string) => Promise<BotRestart | void>;
+        /**
+        * @author GardZock
+        * @param {string} bot_id ID of Bot
+        * @param {string} path File Path
+        * @param {boolean} restart Whether the bot will restart
+        * @description Commit a file in the bot.
+        * @return {Promise<BotRestart | void>}
+        */
+        commit: (bot_id: string, path: string, restart?: boolean) => Promise<any>;
     };
 }
 export {};
