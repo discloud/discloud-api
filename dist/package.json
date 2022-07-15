@@ -1,6 +1,6 @@
 {
   "name": "discloud-api",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "This is a unofficial package of Discloud API",
   "main": "discloud-api.js",
   "author": "GardZock",
