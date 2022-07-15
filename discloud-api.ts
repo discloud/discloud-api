@@ -144,7 +144,7 @@ export class DiscloudAPI {
 
             let data;
             try {
-                data = (await axios.post(`${this.selectVersion()}${this.version == "v1" ? "/bot/" : "/app/"}${bot_id}/restart`, {
+                data = (await axios.post(`${this.selectVersion()}${this.version == "v1" ? "/bot/" : "/app/"}${bot_id}/restart`, {}, {
                     headers: {
                         "api-token": `${this.token}`
                     }

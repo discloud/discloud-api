@@ -78,7 +78,8 @@ typings/
 
 # Next.js build output
 .next
-
+test.js
+test.ts
 # Nuxt.js build / generate output
 .nuxt
 .vscode/

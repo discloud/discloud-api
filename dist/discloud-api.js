@@ -111,7 +111,7 @@ class DiscloudAPI {
                 return this.error.newError("BOT_ID", this.lang);
             let data;
             try {
-                data = (await axios_1.default.post(`${this.selectVersion()}${this.version == "v1" ? "/bot/" : "/app/"}${bot_id}/restart`, {
+                data = (await axios_1.default.post(`${this.selectVersion()}${this.version == "v1" ? "/bot/" : "/app/"}${bot_id}/restart`, {}, {
                     headers: {
                         "api-token": `${this.token}`
                     }
