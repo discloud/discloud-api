@@ -26,27 +26,19 @@ interface BotRestart {
     message: string
 }
 
-type AcceptedVersions = "v1" | "v2"
 type Languages = "en" | "pt"
 
 export class DiscloudAPI {
 
     private readonly token: string
     private readonly lang: Languages
-    private readonly version: AcceptedVersions
-    constructor(token: string, options?: { lang?: Languages, version?: AcceptedVersions }) {
+    constructor(token: string, options?: { lang?: Languages }) {
         this.token = token
         this.lang = options?.lang ? options.lang : "en"
-        this.version = options?.version ? options.version : "v2"
     }
 
     private url = "https://discloud.app/api/v2"
     private readonly error = new Errors()
-
-    private selectVersion() {
-        this.version == "v1" ? this.url = "https://discloud.app/status" : this.url = "https://discloud.app/api/v2"
-        return this.url
-    }
 
     /**
      * @author GardZock
@@ -57,7 +49,7 @@ export class DiscloudAPI {
 
         let data;
         try {
-            data = (await axios.get(`${this.selectVersion()}/user`, {
+            data = (await axios.get(`${this.url}/user`, {
                 headers: {
                     "api-token": `${this.token}`
                 }
@@ -86,7 +78,7 @@ export class DiscloudAPI {
 
             let data;
             try {
-                data = (await axios.get(`${this.selectVersion()}${this.version == "v1" ? "/bot/" : "/app/"}/${bot_id}`, {
+                data = (await axios.get(`${this.url}/app/${bot_id}`, {
                     headers: {
                         "api-token": `${this.token}`
                     }
@@ -115,7 +107,7 @@ export class DiscloudAPI {
 
             let data;
             try {
-                data = (await axios.get(`${this.selectVersion()}${this.version == "v1" ? "/bot/" : "/app/"}${bot_id}/logs`, {
+                data = (await axios.get(`${this.url}/app/${bot_id}/logs`, {
                     headers: {
                         "api-token": `${this.token}`
                     }
@@ -144,7 +136,7 @@ export class DiscloudAPI {
 
             let data;
             try {
-                data = (await axios.post(`${this.selectVersion()}${this.version == "v1" ? "/bot/" : "/app/"}${bot_id}/restart`, {}, {
+                data = (await axios.post(`${this.url}/app/${bot_id}/restart`, {}, {
                     headers: {
                         "api-token": `${this.token}`
                     }
