@@ -1,6 +1,6 @@
 {
   "name": "discloud-api",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "This is a unofficial package of Discloud API",
   "scripts": {
     "build": "npx tsc",
