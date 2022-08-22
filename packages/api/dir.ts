@@ -18,6 +18,5 @@ export class DiscloudDir {
         this.lang = options?.lang ? options.lang : "en"
     }
 
-    private url = "https://api.discloud.app/v2"
     private readonly error = new Errors()
 }

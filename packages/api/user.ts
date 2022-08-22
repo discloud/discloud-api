@@ -23,7 +23,6 @@ export class DiscloudUser {
         this.lang = options?.lang ? options.lang : "en"
     }
 
-    private url = "https://api.discloud.app/v2"
     private readonly error = new Errors()
 
     /**
@@ -34,7 +33,7 @@ export class DiscloudUser {
 
         let data;
         try {
-            data = (await axios.get(`${this.url}/user`, {
+            data = (await axios.get(`/user`, {
                 headers: {
                     "api-token": `${this.token}`
                 }

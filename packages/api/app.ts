@@ -53,7 +53,6 @@ export class DiscloudApp {
         this.lang = options?.lang ? options.lang : "en"
     }
 
-    private url = "https://api.discloud.app/v2"
     private readonly error = new Errors()
 
     /**
@@ -65,7 +64,7 @@ export class DiscloudApp {
 
         if (!app_id && !isAll) return this.error.newError("NEED_PARAM", this.lang)
 
-        const data = (await request('GET', `${this.url}/app/${isAll ? "all" : app_id}`, {
+        const data = (await request('GET', `/app/${isAll ? "all" : app_id}`, {
             headers: {
                 "api-token": `${this.token}`
             }
@@ -86,7 +85,7 @@ export class DiscloudApp {
 
         if (!app_id && !isAll) return this.error.newError("NEED_PARAM", this.lang)
 
-        const data = (await request('GET', `${this.url}/app/${isAll ? "all" : app_id}/logs`, {
+        const data = (await request('GET', `/app/${isAll ? "all" : app_id}/logs`, {
             headers: {
                 "api-token": `${this.token}`
             }
@@ -110,7 +109,7 @@ export class DiscloudApp {
 
         if (!app_id && !isAll) return this.error.newError("NEED_PARAM", this.lang)
 
-        const data = (await request('PUT', `${this.url}/${isMod ? 'team' : 'app'}/${isAll ? "all" : app_id}/${status}`, {
+        const data = (await request('PUT', `/${isMod ? 'team' : 'app'}/${isAll ? "all" : app_id}/${status}`, {
             headers: {
                 "api-token": `${this.token}`
             }
