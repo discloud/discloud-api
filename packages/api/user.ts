@@ -1,5 +1,5 @@
 import axios from "axios"
-import { Languages } from "../../discloud-api"
+import { Languages } from "../.."
 import { Errors } from "../functions/error"
 
 export interface UserPlan {
