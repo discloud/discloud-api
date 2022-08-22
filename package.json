@@ -3,7 +3,7 @@
   "version": "1.0.4",
   "description": "This is a unofficial package of Discloud API",
   "scripts": {
-    "build": "npx tsc",
+    "build": "tsc",
     "dev": "npx tsnd --respawn --transpile-only test.ts",
     "tscd": "npx tsc --declaration"
   },
