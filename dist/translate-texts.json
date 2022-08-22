@@ -4,13 +4,17 @@
             "pt": "Nenhuma informação foi encontrada.",
             "en": "No data found."
         },
-        "BOT_ID": {
-            "pt": "É necessário o ID de um bot para usar este método.",
-            "en": "It's necessary the Bot ID to use this method."
+        "APP_ID": {
+            "pt": "É necessário o ID de um app para usar este método.",
+            "en": "It's necessary the APP ID to use this method."
         },
         "UNAUTHORIZED": {
             "pt": "Você não foi autorizado, porfavor cheque seu token.",
             "en": "You are unauthorized, please check your token."
+        },
+        "NEED_PARAM": {
+            "pt": "Pelo menos um dos parâmetros deve ser adicionado para utilizar este método.",
+            "en": "At least one of the parameters must be added to this method."
         }
     }
 }
