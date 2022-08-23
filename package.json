@@ -1,7 +1,7 @@
 {
   "name": "discloud-api",
-  "version": "1.0.4",
-  "description": "This is a unofficial package of Discloud API",
+  "version": "2.0.0",
+  "description": "This is the official package of Discloud API",
   "scripts": {
     "build": "npx tsc",
     "dev": "npx tsnd --respawn --transpile-only test.ts",
@@ -9,6 +9,11 @@
   },
   "main": "index.js",
   "author": "GardZock",
+  "contributors":[
+    "Gorniaky"
+  ],
+  "homepage": "https://github.com/discloud/discloud-api#readme",
+  "repository": "github:discloud/discloud-api",
   "license": "Apache-2.0",
   "dependencies": {
     "axios": "^0.27.2"
