@@ -1,4 +1,3 @@
-import { Languages } from "../..";
 export interface GetApp {
     status: string;
     message: string;
@@ -39,10 +38,7 @@ export declare enum APP {
 }
 export declare class DiscloudApp {
     private readonly token;
-    private readonly lang;
-    constructor(token: string, options?: {
-        lang?: Languages;
-    });
+    constructor(token: string);
     private readonly error;
     /**
     * @description Get data of a app.

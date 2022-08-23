@@ -1,4 +1,3 @@
-import { Languages } from "../..";
 export interface UserPlan {
     status: string;
     message: string;
@@ -12,10 +11,7 @@ export interface UserPlan {
 }
 export declare class DiscloudUser {
     private readonly token;
-    private readonly lang;
-    constructor(token: string, options?: {
-        lang?: Languages;
-    });
+    constructor(token: string);
     private readonly error;
     /**
      * @description Get status of user.

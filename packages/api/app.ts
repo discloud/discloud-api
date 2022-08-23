@@ -45,7 +45,7 @@ export enum APP {
     Stop = 'stop'
 }
 
-//ADD UPLOAD, RAM
+//ADD DELETE
 
 export class DiscloudApp {
 

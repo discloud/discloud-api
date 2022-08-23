@@ -10,13 +10,11 @@ var APP;
     APP["Start"] = "start";
     APP["Stop"] = "stop";
 })(APP = exports.APP || (exports.APP = {}));
-//ADD UPLOAD, RAM
+//ADD DELETE
 class DiscloudApp {
     token;
-    lang;
-    constructor(token, options) {
+    constructor(token) {
         this.token = token;
-        this.lang = options?.lang ? options.lang : "en";
     }
     error = new error_1.Errors();
     /**
@@ -26,16 +24,12 @@ class DiscloudApp {
     */
     async get(app_id, isAll = false) {
         if (!app_id && !isAll)
-            return this.error.newError("NEED_PARAM", this.lang);
+            return this.error.newError("At least one of the parameters must be added to this method.");
         const data = (await (0, request_1.request)('GET', `/app/${isAll ? "all" : app_id}`, {
             headers: {
                 "api-token": `${this.token}`
             }
         }));
-        if (data == 401)
-            return this.error.newError("UNAUTHORIZED", this.lang);
-        if (!data)
-            return this.error.newError("NO_DATA", this.lang);
         return data;
     }
     /**
@@ -45,16 +39,12 @@ class DiscloudApp {
     */
     async logs(app_id, isAll = false) {
         if (!app_id && !isAll)
-            return this.error.newError("NEED_PARAM", this.lang);
+            return this.error.newError("At least one of the parameters must be added to this method.");
         const data = (await (0, request_1.request)('GET', `/app/${isAll ? "all" : app_id}/logs`, {
             headers: {
                 "api-token": `${this.token}`
             }
         }));
-        if (data == 401)
-            return this.error.newError("UNAUTHORIZED", this.lang);
-        if (!data)
-            return this.error.newError("NO_DATA", this.lang);
         return data;
     }
     /**
@@ -67,15 +57,12 @@ class DiscloudApp {
     */
     async changeStatus(status, app_id, isAll = false, isMod = false) {
         if (!app_id && !isAll)
-            return this.error.newError("NEED_PARAM", this.lang);
+            return this.error.newError("At least one of the parameters must be added to this method.");
         const data = (await (0, request_1.request)('PUT', `/${isMod ? 'team' : 'app'}/${isAll ? "all" : app_id}/${status}`, {
             headers: {
                 "api-token": `${this.token}`
             }
         }, {}));
-        if (data == 401)
-            return this.error.newError("UNAUTHORIZED", this.lang);
-        //if (!data) return this.error.newError("NO_DATA", this.lang)
         return data;
     }
     /**
@@ -86,17 +73,13 @@ class DiscloudApp {
     */
     async ram(app_id, ram) {
         if (!app_id)
-            return this.error.newError("APP_ID", this.lang);
+            return this.error.newError("APP_ID");
         const data = (await (0, request_1.request)('PUT', `/app/${app_id}/ram`, {
             headers: {
                 "api-token": `${this.token}`,
                 JSON: `{ "ramMB": ${ram} }`
             }
         }, {}));
-        if (data == 401)
-            return this.error.newError("UNAUTHORIZED", this.lang);
-        if (!data)
-            return this.error.newError("NO_DATA", this.lang);
         return data;
     }
     /**
@@ -106,19 +89,15 @@ class DiscloudApp {
     */
     async upload(path) {
         if (!path.endsWith('.zip'))
-            return this.error.newError("INVALID_FILE", this.lang);
+            return this.error.newError("The added file is invalid.");
         const file = (0, file_1.getFile)(path);
         if (!file)
-            return this.error.newError("INVALID_FILE", this.lang);
+            return this.error.newError("The added file is invalid.");
         const data = (await (0, request_1.request)('POST', `/app/upload`, {
             headers: {
                 "api-token": `${this.token}`
             }
         }, file));
-        if (data == 401)
-            return this.error.newError("UNAUTHORIZED", this.lang);
-        if (!data)
-            return this.error.newError("NO_DATA", this.lang);
         return data;
     }
 }

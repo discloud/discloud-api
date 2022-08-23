@@ -8,10 +8,8 @@ const axios_1 = __importDefault(require("axios"));
 const error_1 = require("../functions/error");
 class DiscloudUser {
     token;
-    lang;
-    constructor(token, options) {
+    constructor(token) {
         this.token = token;
-        this.lang = options?.lang ? options.lang : "en";
     }
     error = new error_1.Errors();
     /**
@@ -29,12 +27,10 @@ class DiscloudUser {
         }
         catch (err) {
             if (err.code == 401) {
-                return this.error.newError("UNAUTHORIZED", this.lang);
+                return this.error.newError("UNAUTHORIZED");
             }
             return console.error(err);
         }
-        if (!data)
-            return this.error.newError("NO_DATA", this.lang);
         return data;
     }
 }

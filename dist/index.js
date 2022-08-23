@@ -6,16 +6,14 @@ const user_1 = require("./packages/api/user");
 const dir_1 = require("./packages/api/dir");
 class DiscloudAPI {
     token;
-    lang;
     app;
     user;
     dir;
-    constructor(token, options) {
+    constructor(token) {
         this.token = token;
-        this.lang = options?.lang ? options.lang : "en";
-        this.app = new app_1.DiscloudApp(this.token, { lang: this.lang });
-        this.user = new user_1.DiscloudUser(this.token, { lang: this.lang });
-        this.dir = new dir_1.DiscloudDir(this.token, { lang: this.lang });
+        this.app = new app_1.DiscloudApp(this.token);
+        this.user = new user_1.DiscloudUser(this.token);
+        this.dir = new dir_1.DiscloudDir(this.token);
     }
 }
 exports.DiscloudAPI = DiscloudAPI;
