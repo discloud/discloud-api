@@ -8,15 +8,13 @@ export type Languages = "en" | "pt"
 export class DiscloudAPI {
 
     private readonly token: string
-    private readonly lang: Languages
     public app: DiscloudApp
     public user: DiscloudUser
     public dir: DiscloudDir
-    constructor(token: string, options?: { lang?: Languages }) {
+    constructor(token: string) {
         this.token = token
-        this.lang = options?.lang ? options.lang : "en"
-        this.app = new DiscloudApp(this.token, { lang: this.lang })
-        this.user = new DiscloudUser(this.token, { lang: this.lang })
-        this.dir = new DiscloudDir(this.token, { lang: this.lang })
+        this.app = new DiscloudApp(this.token)
+        this.user = new DiscloudUser(this.token)
+        this.dir = new DiscloudDir(this.token)
     }
 }

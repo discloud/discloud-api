@@ -1,16 +1,32 @@
-import { Languages } from "../../discloud-api";
+import { Languages } from "../..";
 export interface GetApp {
-    app_id: string;
-    info: string;
-    container: string;
-    cpu: string;
-    memory: string;
-    last_restart: string;
+    status: string;
+    message: string;
+    apps: {
+        id: string;
+        online: boolean;
+        ramKilled: boolean;
+        ram: number;
+        mainFile: string;
+        lang: string;
+        mods: Object[];
+        autoDeployGit: string;
+        autoRestart: boolean;
+    };
+}
+export interface RAM {
+    ramMB: number;
 }
 export interface AppLogs {
-    app_id: string;
-    link: string;
-    logs: string | string[] | null;
+    status: string;
+    message: string;
+    apps: {
+        id: string;
+        terminal: {
+            big: string;
+            small: string;
+        };
+    };
 }
 export interface GenericMessage {
     status: string;
@@ -27,12 +43,11 @@ export declare class DiscloudApp {
     constructor(token: string, options?: {
         lang?: Languages;
     });
-    private url;
     private readonly error;
     /**
-        * @description Get data of a app.
-        * @param {string} app_id ID of App
-        * @return {Promise<GetApp | void>}
+    * @description Get data of a app.
+    * @param {string} app_id ID of App
+    * @return {Promise<GetApp | void>}
     */
     get(app_id?: string, isAll?: boolean): Promise<GetApp | void>;
     /**
@@ -50,4 +65,17 @@ export declare class DiscloudApp {
     * @return {Promise<GenericMessage | void>}
     */
     changeStatus(status: APP, app_id?: string, isAll?: boolean, isMod?: boolean): Promise<GenericMessage | void>;
+    /**
+    * @description Put a new ram value on App.
+    * @param {String} app_id ID or SubDomain of App.
+    * @param {Number} ram Qunatity of Ram.
+    * @return {Promise<GenericMessage | void>}
+    */
+    ram(app_id: string, ram: number): Promise<GenericMessage | void>;
+    /**
+    * @description Upload a App.
+    * @param {String?} path Path of Zip File.
+    * @return {Promise<GenericMessage | void>}
+    */
+    upload(path: string): Promise<GenericMessage | void>;
 }

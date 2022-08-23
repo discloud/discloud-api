@@ -40,11 +40,10 @@ export class DiscloudUser {
             })).data
         } catch (err: any) {
             if (err.code == 401) {
-                    return this.error.newError("UNAUTHORIZED", this.lang)
+                    return this.error.newError("UNAUTHORIZED")
                 }
                 return console.error(err)
         }
-        if (!data) return this.error.newError("NO_DATA", this.lang)
 
         return data;
     }

@@ -1,4 +1,4 @@
-import { Languages } from "../../discloud-api";
+import { Languages } from "../..";
 export interface UserPlan {
     status: string;
     message: string;
@@ -16,7 +16,6 @@ export declare class DiscloudUser {
     constructor(token: string, options?: {
         lang?: Languages;
     });
-    private url;
     private readonly error;
     /**
      * @description Get status of user.

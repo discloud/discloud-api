@@ -1,4 +1,4 @@
-import { Languages } from "../../discloud-api";
+import { Languages } from "../..";
 export interface UserStatus {
     userID: string;
     plan: string;
@@ -9,6 +9,5 @@ export declare class DiscloudDir {
     constructor(token: string, options?: {
         lang?: Languages;
     });
-    private url;
     private readonly error;
 }

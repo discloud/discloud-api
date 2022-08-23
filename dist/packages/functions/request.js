@@ -12,6 +12,7 @@ async function request(method, url, config, d) {
         GET: axios_1.default.get,
         POST: axios_1.default.post
     };
+    config ? config['baseURL'] = "https://api.discloud.app/v2" : config = { baseURL: "https://api.discloud.app/v2" };
     try {
         data = ((d || d == {}) ? await methods[method](url, d, config) : await methods[method](url, config)).data;
     }

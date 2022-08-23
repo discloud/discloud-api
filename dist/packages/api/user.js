@@ -13,7 +13,6 @@ class DiscloudUser {
         this.token = token;
         this.lang = options?.lang ? options.lang : "en";
     }
-    url = "https://api.discloud.app/v2";
     error = new error_1.Errors();
     /**
      * @description Get status of user.
@@ -22,7 +21,7 @@ class DiscloudUser {
     async status() {
         let data;
         try {
-            data = (await axios_1.default.get(`${this.url}/user`, {
+            data = (await axios_1.default.get(`/user`, {
                 headers: {
                     "api-token": `${this.token}`
                 }

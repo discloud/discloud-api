@@ -1,6 +1,6 @@
-import axios from "axios"
 import { Languages } from "../.."
 import { Errors } from "../functions/error"
+import { getFile } from "../functions/file"
 import { request } from "../functions/request"
 
 export interface GetApp {
@@ -17,7 +17,11 @@ export interface GetApp {
       autoDeployGit: string,
       autoRestart: boolean
     }
-  }
+}
+
+export interface RAM {
+    ramMB: number
+}
 
 export interface AppLogs {
     status: string,
@@ -47,10 +51,8 @@ export enum APP {
 export class DiscloudApp {
 
     private readonly token: string
-    private readonly lang: Languages
-    constructor(token: string, options?: { lang?: Languages }) {
+    constructor(token: string) {
         this.token = token
-        this.lang = options?.lang ? options.lang : "en"
     }
 
     private readonly error = new Errors()
@@ -62,16 +64,13 @@ export class DiscloudApp {
     */
     async get(app_id?: string, isAll: boolean = false): Promise<GetApp | void> {
 
-        if (!app_id && !isAll) return this.error.newError("NEED_PARAM", this.lang)
+        if (!app_id && !isAll) return this.error.newError("At least one of the parameters must be added to this method.", )
 
         const data = (await request('GET', `/app/${isAll ? "all" : app_id}`, {
             headers: {
                 "api-token": `${this.token}`
             }
         }))
-
-        if (data == 401) return this.error.newError("UNAUTHORIZED", this.lang)
-        if (!data) return this.error.newError("NO_DATA", this.lang)
 
         return data;
     }
@@ -83,16 +82,13 @@ export class DiscloudApp {
     */
     async logs(app_id?: string, isAll: boolean = false): Promise<AppLogs | void> {
 
-        if (!app_id && !isAll) return this.error.newError("NEED_PARAM", this.lang)
+        if (!app_id && !isAll) return this.error.newError("At least one of the parameters must be added to this method.", )
 
         const data = (await request('GET', `/app/${isAll ? "all" : app_id}/logs`, {
             headers: {
                 "api-token": `${this.token}`
             }
         }))
-
-        if (data == 401) return this.error.newError("UNAUTHORIZED", this.lang)
-        if (!data) return this.error.newError("NO_DATA", this.lang)
 
         return data;
     }
@@ -107,16 +103,54 @@ export class DiscloudApp {
     */
     async changeStatus(status: APP, app_id?: string, isAll: boolean = false, isMod: boolean = false): Promise<GenericMessage | void> {
 
-        if (!app_id && !isAll) return this.error.newError("NEED_PARAM", this.lang)
+        if (!app_id && !isAll) return this.error.newError("At least one of the parameters must be added to this method.")
 
         const data = (await request('PUT', `/${isMod ? 'team' : 'app'}/${isAll ? "all" : app_id}/${status}`, {
             headers: {
                 "api-token": `${this.token}`
             }
-        }, {})).data
+        }, {}))
 
-        if (data == 401) return this.error.newError("UNAUTHORIZED", this.lang)
-        if (!data) return this.error.newError("NO_DATA", this.lang)
+        return data;
+    }
+
+    /**
+    * @description Put a new ram value on App.
+    * @param {String} app_id ID or SubDomain of App.
+    * @param {Number} ram Qunatity of Ram.
+    * @return {Promise<GenericMessage | void>}
+    */
+     async ram(app_id: string, ram: number): Promise<GenericMessage | void> {
+
+        if (!app_id) return this.error.newError("APP_ID", )
+
+        const data = (await request('PUT', `/app/${app_id}/ram`, {
+            headers: {
+                "api-token": `${this.token}`,
+                JSON: `{ "ramMB": ${ram} }`
+            }
+        }, {}))
+
+        return data;
+    }
+
+    /**
+    * @description Upload a App.
+    * @param {String?} path Path of Zip File.
+    * @return {Promise<GenericMessage | void>}
+    */
+     async upload(path: string): Promise<GenericMessage | void> {
+
+        if (!path.endsWith('.zip')) return this.error.newError("The added file is invalid.")
+
+        const file = getFile(path)
+        if (!file) return this.error.newError("The added file is invalid.")
+
+        const data = (await request('POST', `/app/upload`, {
+            headers: {
+                "api-token": `${this.token}`
+            }
+        }, file))
 
         return data;
     }
