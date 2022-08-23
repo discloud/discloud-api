@@ -1,4 +1,3 @@
-import { Languages } from "../.."
 import { Errors } from "../functions/error"
 import { getFile } from "../functions/file"
 import { request } from "../functions/request"

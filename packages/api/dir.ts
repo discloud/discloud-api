@@ -1,5 +1,3 @@
-import axios from "axios"
-import { Languages } from "../.."
 import { Errors } from "../functions/error"
 
 export interface UserStatus {
@@ -12,10 +10,8 @@ export interface UserStatus {
 export class DiscloudDir {
 
     private readonly token: string
-    private readonly lang: Languages
-    constructor(token: string, options?: { lang?: Languages }) {
+    constructor(token: string) {
         this.token = token
-        this.lang = options?.lang ? options.lang : "en"
     }
 
     private readonly error = new Errors()

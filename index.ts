@@ -1,9 +1,6 @@
-import { Errors } from "./packages/functions/error"
 import { DiscloudApp } from "./packages/api/app"
 import { DiscloudUser } from "./packages/api/user"
 import { DiscloudDir } from "./packages/api/dir"
-
-export type Languages = "en" | "pt"
 
 export class DiscloudAPI {
 
