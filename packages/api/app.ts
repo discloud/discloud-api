@@ -126,9 +126,10 @@ export class DiscloudApp {
         const data = (await request('PUT', `/app/${app_id}/ram`, {
             headers: {
                 "api-token": `${this.token}`,
-                JSON: `{ "ramMB": ${ram} }`
             }
-        }, {}))
+        }, {
+            ramMB: ram
+        }))
 
         return data;
     }
