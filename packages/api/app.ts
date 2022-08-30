@@ -147,6 +147,7 @@ export class DiscloudApp {
         if (!file) return this.error.newError("The added file is invalid.")
 
         const data = (await request('POST', `/app/upload`, {
+            timeout: 300000,
             headers: {
                 "api-token": `${this.token}`
             }
