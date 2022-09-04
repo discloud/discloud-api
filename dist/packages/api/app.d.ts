@@ -13,6 +13,15 @@ export interface GetApp {
         autoRestart: boolean;
     };
 }
+export interface AppDeleteResponse {
+    status: string;
+    message: string;
+    apps?: {
+        removealled: string[];
+        alreadyInProcess: string[];
+        alreadyOffline: string[];
+    };
+}
 export interface RAM {
     ramMB: number;
 }
@@ -70,8 +79,14 @@ export declare class DiscloudApp {
     ram(app_id: string, ram: number): Promise<GenericMessage | void>;
     /**
     * @description Upload a App.
-    * @param {String?} path Path of Zip File.
+    * @param {String} path Path of Zip File.
     * @return {Promise<GenericMessage | void>}
     */
     upload(path: string): Promise<GenericMessage | void>;
+    /**
+     * @description Delete an app.
+     * @param {string} app_id ID of App.
+     * @return {Promise<AppDeleteResponse | void>}
+     */
+    delete(app_id?: string, isAll?: boolean): Promise<AppDeleteResponse | void>;
 }

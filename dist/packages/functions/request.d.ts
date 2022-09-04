@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from "axios";
-declare type METHODS = "PUT" | "GET" | "POST";
-export declare function request(method: METHODS, url: string, config?: AxiosRequestConfig<any>, d?: any): Promise<any>;
-export {};
+import { Dispatcher } from "undici";
+export declare function requester(url: string, config?: ({
+    dispatcher?: Dispatcher;
+} & Omit<Dispatcher.RequestOptions, "origin" | "path" | "method"> & Partial<Pick<Dispatcher.RequestOptions, "method">>) | undefined): Promise<any>;

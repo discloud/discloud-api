@@ -10,7 +10,6 @@ var APP;
     APP["Start"] = "start";
     APP["Stop"] = "stop";
 })(APP = exports.APP || (exports.APP = {}));
-//ADD DELETE
 class DiscloudApp {
     token;
     constructor(token) {
@@ -25,10 +24,11 @@ class DiscloudApp {
     async get(app_id, isAll = false) {
         if (!app_id && !isAll)
             return this.error.newError("At least one of the parameters must be added to this method.");
-        const data = (await (0, request_1.request)('GET', `/app/${isAll ? "all" : app_id}`, {
+        const data = (await (0, request_1.requester)(`/app/${isAll ? "all" : app_id}`, {
             headers: {
                 "api-token": `${this.token}`
-            }
+            },
+            method: "GET"
         }));
         return data;
     }
@@ -40,10 +40,11 @@ class DiscloudApp {
     async logs(app_id, isAll = false) {
         if (!app_id && !isAll)
             return this.error.newError("At least one of the parameters must be added to this method.");
-        const data = (await (0, request_1.request)('GET', `/app/${isAll ? "all" : app_id}/logs`, {
+        const data = (await (0, request_1.requester)(`/app/${isAll ? "all" : app_id}/logs`, {
             headers: {
                 "api-token": `${this.token}`
-            }
+            },
+            method: "GET"
         }));
         return data;
     }
@@ -58,11 +59,12 @@ class DiscloudApp {
     async changeStatus(status, app_id, isAll = false, isMod = false) {
         if (!app_id && !isAll)
             return this.error.newError("At least one of the parameters must be added to this method.");
-        const data = (await (0, request_1.request)('PUT', `/${isMod ? 'team' : 'app'}/${isAll ? "all" : app_id}/${status}`, {
+        const data = await (0, request_1.requester)(`/${isMod ? 'team' : 'app'}/${isAll ? "all" : app_id}/${status}`, {
             headers: {
                 "api-token": `${this.token}`
-            }
-        }, {}));
+            },
+            method: "PUT"
+        });
         return data;
     }
     /**
@@ -73,18 +75,19 @@ class DiscloudApp {
     */
     async ram(app_id, ram) {
         if (!app_id)
-            return this.error.newError("APP_ID");
-        const data = (await (0, request_1.request)('PUT', `/app/${app_id}/ram`, {
+            return this.error.newError("ID of App is Missing.");
+        const data = (await (0, request_1.requester)(`/app/${app_id}/ram`, {
             headers: {
                 "api-token": `${this.token}`,
-                JSON: `{ "ramMB": ${ram} }`
-            }
-        }, {}));
+            },
+            method: "PUT",
+            body: `{ "ramMB": ${ram} }`
+        }));
         return data;
     }
     /**
     * @description Upload a App.
-    * @param {String?} path Path of Zip File.
+    * @param {String} path Path of Zip File.
     * @return {Promise<GenericMessage | void>}
     */
     async upload(path) {
@@ -93,11 +96,31 @@ class DiscloudApp {
         const file = (0, file_1.getFile)(path);
         if (!file)
             return this.error.newError("The added file is invalid.");
-        const data = (await (0, request_1.request)('POST', `/app/upload`, {
+        const data = await (0, request_1.requester)(`/upload`, {
+            headersTimeout: 300000,
+            bodyTimeout: 300000,
             headers: {
                 "api-token": `${this.token}`
-            }
-        }, file));
+            },
+            method: "POST",
+            body: file
+        });
+        return data;
+    }
+    /**
+     * @description Delete an app.
+     * @param {string} app_id ID of App.
+     * @return {Promise<AppDeleteResponse | void>}
+     */
+    async delete(app_id, isAll = false) {
+        if (!app_id && !isAll)
+            return this.error.newError("At least one of the parameters must be added to this method.");
+        const data = await (0, request_1.requester)(`/app/${isAll ? "all" : app_id}/delete`, {
+            headers: {
+                "api-token": `${this.token}`
+            },
+            method: 'DELETE'
+        });
         return data;
     }
 }

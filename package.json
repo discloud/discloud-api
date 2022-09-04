@@ -16,7 +16,7 @@
   "repository": "github:discloud/discloud-api",
   "license": "Apache-2.0",
   "dependencies": {
-    "axios": "^0.27.2"
+    "undici": "^5.10.0"
   },
   "devDependencies": {
     "@types/jsdoc-to-markdown": "^7.0.3",

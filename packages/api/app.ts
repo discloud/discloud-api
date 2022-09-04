@@ -1,6 +1,6 @@
 import { Errors } from "../functions/error"
 import { getFile } from "../functions/file"
-import { request } from "../functions/request"
+import { requester } from "../functions/request"
 
 export interface GetApp {
     status: string,
@@ -15,6 +15,16 @@ export interface GetApp {
       mods: Object[],
       autoDeployGit: string,
       autoRestart: boolean
+    }
+}
+
+export interface AppDeleteResponse {
+    status: string
+    message: string
+    apps?: {
+        removealled: string[]
+        alreadyInProcess: string[]
+        alreadyOffline: string[]
     }
 }
 
@@ -45,8 +55,6 @@ export enum APP {
     Stop = 'stop'
 }
 
-//ADD DELETE
-
 export class DiscloudApp {
 
     private readonly token: string
@@ -65,10 +73,11 @@ export class DiscloudApp {
 
         if (!app_id && !isAll) return this.error.newError("At least one of the parameters must be added to this method.", )
 
-        const data = (await request('GET', `/app/${isAll ? "all" : app_id}`, {
+        const data = (await requester(`/app/${isAll ? "all" : app_id}`, {
             headers: {
                 "api-token": `${this.token}`
-            }
+            },
+            method: "GET"
         }))
 
         return data;
@@ -83,10 +92,11 @@ export class DiscloudApp {
 
         if (!app_id && !isAll) return this.error.newError("At least one of the parameters must be added to this method.", )
 
-        const data = (await request('GET', `/app/${isAll ? "all" : app_id}/logs`, {
+        const data = (await requester(`/app/${isAll ? "all" : app_id}/logs`, {
             headers: {
                 "api-token": `${this.token}`
-            }
+            },
+            method: "GET"
         }))
 
         return data;
@@ -104,11 +114,12 @@ export class DiscloudApp {
 
         if (!app_id && !isAll) return this.error.newError("At least one of the parameters must be added to this method.")
 
-        const data = (await request('PUT', `/${isMod ? 'team' : 'app'}/${isAll ? "all" : app_id}/${status}`, {
+        const data = await requester(`/${isMod ? 'team' : 'app'}/${isAll ? "all" : app_id}/${status}`, {
             headers: {
                 "api-token": `${this.token}`
-            }
-        }, {}))
+            },
+            method: "PUT"
+        })
 
         return data;
     }
@@ -121,14 +132,14 @@ export class DiscloudApp {
     */
      async ram(app_id: string, ram: number): Promise<GenericMessage | void> {
 
-        if (!app_id) return this.error.newError("APP_ID", )
+        if (!app_id) return this.error.newError("ID of App is Missing.")
 
-        const data = (await request('PUT', `/app/${app_id}/ram`, {
+        const data = (await requester(`/app/${app_id}/ram`, {
             headers: {
                 "api-token": `${this.token}`,
-            }
-        }, {
-            ramMB: ram
+            },
+            method: "PUT",
+            body: `{ "ramMB": ${ram} }`
         }))
 
         return data;
@@ -136,7 +147,7 @@ export class DiscloudApp {
 
     /**
     * @description Upload a App.
-    * @param {String?} path Path of Zip File.
+    * @param {String} path Path of Zip File.
     * @return {Promise<GenericMessage | void>}
     */
      async upload(path: string): Promise<GenericMessage | void> {
@@ -146,12 +157,34 @@ export class DiscloudApp {
         const file = getFile(path)
         if (!file) return this.error.newError("The added file is invalid.")
 
-        const data = (await request('POST', `/app/upload`, {
-            timeout: 300000,
+        const data = await requester(`/upload`, {
+            headersTimeout: 300000,
+            bodyTimeout: 300000,
             headers: {
                 "api-token": `${this.token}`
-            }
-        }, file))
+            },
+            method: "POST",
+            body: file
+        })
+
+        return data;
+    }
+
+    /**
+     * @description Delete an app.
+     * @param {string} app_id ID of App.
+     * @return {Promise<AppDeleteResponse | void>}
+     */
+    async delete(app_id?: string, isAll: boolean = false): Promise<AppDeleteResponse | void> {
+
+        if (!app_id && !isAll) return this.error.newError("At least one of the parameters must be added to this method.",)
+
+        const data = await requester(`/app/${isAll ? "all" : app_id}/delete`, {
+            headers: {
+                "api-token": `${this.token}`
+            },
+            method: 'DELETE'
+        })
 
         return data;
     }

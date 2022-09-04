@@ -1,5 +1,7 @@
 import { existsSync, createReadStream } from 'fs'
-import FormData from 'form-data'
+import { FormData } from 'undici'
+import { Blob } from "buffer";
+import { BinaryLike } from "crypto";
 
 export function getFile(path: string) {
 
@@ -7,7 +9,7 @@ export function getFile(path: string) {
 
     try {
         if (existsSync(path)) {
-            fileData = createReadStream(path)
+            fileData = streamtoBlob(path)
         } else {
             fileData = null
         }
@@ -18,4 +20,15 @@ export function getFile(path: string) {
     const form = new FormData()
     form.append('file', fileData)
     return form;
+}
+
+export async function streamtoBlob(file: string) {
+    return new Promise(async (resolve, reject) => {
+        const stream = await createReadStream(file);
+        const chunks: (Blob | BinaryLike)[] | (string | Buffer)[] = [];
+        stream
+            .on("data", chunk => chunks.push(chunk))
+            .once("end", () => resolve(new Blob(chunks)))
+            .once("error", reject);
+    });
 }

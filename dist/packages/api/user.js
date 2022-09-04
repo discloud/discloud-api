@@ -1,11 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DiscloudUser = void 0;
-const axios_1 = __importDefault(require("axios"));
 const error_1 = require("../functions/error");
+const request_1 = require("../functions/request");
 class DiscloudUser {
     token;
     constructor(token) {
@@ -13,24 +10,30 @@ class DiscloudUser {
     }
     error = new error_1.Errors();
     /**
-     * @description Get status of user.
-     * @return {Promise<UserStatus | void>}
+     * @description Get information about an user.
+     * @return {Promise<User | void>}
      */
-    async status() {
-        let data;
-        try {
-            data = (await axios_1.default.get(`/user`, {
-                headers: {
-                    "api-token": `${this.token}`
-                }
-            })).data;
-        }
-        catch (err) {
-            if (err.code == 401) {
-                return this.error.newError("UNAUTHORIZED");
-            }
-            return console.error(err);
-        }
+    async info() {
+        const data = await (0, request_1.requester)(`/user`, {
+            headers: {
+                "api-token": `${this.token}`
+            },
+            method: 'GET'
+        });
+        return data;
+    }
+    /**
+     * @description Change API language return.
+     * @param {Locales} lang language.
+     * @return {Promise<Locale | void>}
+     */
+    async locale(lang) {
+        const data = await (0, request_1.requester)(`/locale/${lang}`, {
+            headers: {
+                "api-token": `${this.token}`
+            },
+            method: 'PUT'
+        });
         return data;
     }
 }

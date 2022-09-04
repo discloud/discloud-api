@@ -1,24 +1,20 @@
-import axios, { AxiosRequestConfig } from "axios";
+import { Dispatcher, request } from "undici";
 import { Errors } from "./error";
 
-type METHODS = "DELETE" | "PUT" | "GET" | "POST"
-
-export async function request(method: METHODS, url: string, config?: AxiosRequestConfig<any>, d?: any) {
+export async function requester(url: string, config?: ({ dispatcher?: Dispatcher } & Omit<
+    Dispatcher.RequestOptions,
+    "origin" | "path" | "method"
+  > &
+    Partial<Pick<Dispatcher.RequestOptions, "method">>)
+| undefined) {
     let data;
 
-    const methods = {
-        DELETE: axios.delete,
-        PUT: axios.put,
-        GET: axios.get,
-        POST: axios.post
-    }
-
-    config ? config['baseURL'] = "https://api.discloud.app/v2" : config = { baseURL: "https://api.discloud.app/v2" }
+    url = "https://api.discloud.app/v2" + url
 
     try {
-        data = ((d || d == {}) ? await methods[method](url, d, config) : await methods[method](url, config)).data
+        data = (await (await request(url, config)).body.json())
     } catch (err: any) {
-        return new Errors().newError(err.response.data.message)
+        return new Errors().newError(err.response?.body ? err.response.body.json().message : err)
     }
 
     if (data.status == "error") return new Errors().newError(data.message)
