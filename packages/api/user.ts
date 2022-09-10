@@ -1,4 +1,4 @@
-import { Errors } from "../functions/error"
+import { BaseClass } from "../base/class"
 import { requester } from "../functions/request"
 
 export interface User {
@@ -21,14 +21,7 @@ export interface User {
 export interface Locale { status: string, locale: Locales }
 export type Locales = "pt-BR" | "en-US"
 
-export class DiscloudUser {
-
-    private readonly token: string
-    constructor(token: string) {
-        this.token = token
-    }
-
-    private readonly error = new Errors()
+export class DiscloudUser extends BaseClass {
 
     /**
      * @description Get information about an user.
@@ -58,6 +51,22 @@ export class DiscloudUser {
                 "api-token": `${this.token}`
             },
             method: 'PUT'
+        })
+
+        return data;
+    }
+
+    /**
+     * @description See your team users.
+     * @return {Promise<any | void>}
+     */
+     public async team(): Promise<any | void> {
+
+        const data = await requester(`/team`, {
+            headers: {
+                "api-token": `${this.token}`
+            },
+            method: 'GET'
         })
 
         return data;

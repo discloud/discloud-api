@@ -1,14 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DiscloudUser = void 0;
-const error_1 = require("../functions/error");
+const class_1 = require("../base/class");
 const request_1 = require("../functions/request");
-class DiscloudUser {
-    token;
-    constructor(token) {
-        this.token = token;
-    }
-    error = new error_1.Errors();
+class DiscloudUser extends class_1.BaseClass {
     /**
      * @description Get information about an user.
      * @return {Promise<User | void>}
@@ -33,6 +28,19 @@ class DiscloudUser {
                 "api-token": `${this.token}`
             },
             method: 'PUT'
+        });
+        return data;
+    }
+    /**
+     * @description See your team users.
+     * @return {Promise<any | void>}
+     */
+    async team() {
+        const data = await (0, request_1.requester)(`/team`, {
+            headers: {
+                "api-token": `${this.token}`
+            },
+            method: 'GET'
         });
         return data;
     }

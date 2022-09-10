@@ -1,21 +1,23 @@
-import { Errors } from "../functions/error"
+import { BaseClass } from "../base/class"
 import { getFile } from "../functions/file"
 import { requester } from "../functions/request"
 
 export interface GetApp {
     status: string,
     message: string,
-    apps: {
-      id: string,
-      online: boolean,
-      ramKilled: boolean,
-      ram: number,
-      mainFile: string,
-      lang: string,
-      mods: Object[],
-      autoDeployGit: string,
-      autoRestart: boolean
-    }
+    apps: Apps | Apps[]
+}
+
+export interface Apps {
+    id: string,
+    online: boolean,
+    ramKilled: boolean,
+    ram: number,
+    mainFile: string,
+    lang: string,
+    mods: Object[],
+    autoDeployGit: string,
+    autoRestart: boolean
 }
 
 export interface AppDeleteResponse {
@@ -55,14 +57,7 @@ export enum APP {
     Stop = 'stop'
 }
 
-export class DiscloudApp {
-
-    private readonly token: string
-    constructor(token: string) {
-        this.token = token
-    }
-
-    private readonly error = new Errors()
+export class DiscloudApp extends BaseClass {
 
     /**
     * @description Get data of a app.
@@ -78,7 +73,7 @@ export class DiscloudApp {
                 "api-token": `${this.token}`
             },
             method: "GET"
-        }))
+        })) as GetApp;
 
         return data;
     }
@@ -127,7 +122,7 @@ export class DiscloudApp {
     /**
     * @description Put a new ram value on App.
     * @param {String} app_id ID or SubDomain of App.
-    * @param {Number} ram Qunatity of Ram.
+    * @param {Number} ram Quantity of Ram.
     * @return {Promise<GenericMessage | void>}
     */
      async ram(app_id: string, ram: number): Promise<GenericMessage | void> {
@@ -154,7 +149,7 @@ export class DiscloudApp {
 
         if (!path.endsWith('.zip')) return this.error.newError("The added file is invalid.")
 
-        const file = getFile(path)
+        const file = await getFile(path)
         if (!file) return this.error.newError("The added file is invalid.")
 
         const data = await requester(`/upload`, {

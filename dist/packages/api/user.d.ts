@@ -1,3 +1,4 @@
+import { BaseClass } from "../base/class";
 export interface User {
     status: string;
     message: string;
@@ -24,10 +25,7 @@ export interface Locale {
     locale: Locales;
 }
 export declare type Locales = "pt-BR" | "en-US";
-export declare class DiscloudUser {
-    private readonly token;
-    constructor(token: string);
-    private readonly error;
+export declare class DiscloudUser extends BaseClass {
     /**
      * @description Get information about an user.
      * @return {Promise<User | void>}
@@ -39,4 +37,9 @@ export declare class DiscloudUser {
      * @return {Promise<Locale | void>}
      */
     locale(lang: Locales): Promise<Locale | void>;
+    /**
+     * @description See your team users.
+     * @return {Promise<any | void>}
+     */
+    team(): Promise<any | void>;
 }

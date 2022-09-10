@@ -1,3 +1,4 @@
+import { BaseClass } from "../base/class";
 export interface CommitResponse {
     status: string;
     statusCode: number;
@@ -17,10 +18,7 @@ export interface AppBackup {
     status: string;
     url: string;
 }
-export declare class DiscloudDir {
-    private readonly token;
-    constructor(token: string);
-    private readonly error;
+export declare class DiscloudDir extends BaseClass {
     /**
      * @description Commit a App.
      * @param {String} app_id ID or SubDomain of App.

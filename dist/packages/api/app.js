@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DiscloudApp = exports.APP = void 0;
-const error_1 = require("../functions/error");
+const class_1 = require("../base/class");
 const file_1 = require("../functions/file");
 const request_1 = require("../functions/request");
 var APP;
@@ -10,12 +10,7 @@ var APP;
     APP["Start"] = "start";
     APP["Stop"] = "stop";
 })(APP = exports.APP || (exports.APP = {}));
-class DiscloudApp {
-    token;
-    constructor(token) {
-        this.token = token;
-    }
-    error = new error_1.Errors();
+class DiscloudApp extends class_1.BaseClass {
     /**
     * @description Get data of a app.
     * @param {string} app_id ID of App
@@ -70,7 +65,7 @@ class DiscloudApp {
     /**
     * @description Put a new ram value on App.
     * @param {String} app_id ID or SubDomain of App.
-    * @param {Number} ram Qunatity of Ram.
+    * @param {Number} ram Quantity of Ram.
     * @return {Promise<GenericMessage | void>}
     */
     async ram(app_id, ram) {
@@ -93,7 +88,7 @@ class DiscloudApp {
     async upload(path) {
         if (!path.endsWith('.zip'))
             return this.error.newError("The added file is invalid.");
-        const file = (0, file_1.getFile)(path);
+        const file = await (0, file_1.getFile)(path);
         if (!file)
             return this.error.newError("The added file is invalid.");
         const data = await (0, request_1.requester)(`/upload`, {

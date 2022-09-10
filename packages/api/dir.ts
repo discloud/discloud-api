@@ -1,4 +1,4 @@
-import { Errors } from "../functions/error"
+import { BaseClass } from "../base/class"
 import { getFile } from "../functions/file"
 import { requester } from "../functions/request"
 
@@ -29,14 +29,7 @@ export interface AppBackup {
 
 //REMAKE COMMIT, BACKUP
 
-export class DiscloudDir {
-
-    private readonly token: string
-    constructor(token: string) {
-        this.token = token
-    }
-
-    private readonly error = new Errors()
+export class DiscloudDir extends BaseClass {
 
     /**
      * @description Commit a App.
@@ -48,7 +41,7 @@ export class DiscloudDir {
 
         if (!path.endsWith('.zip')) return this.error.newError("The added file is invalid.")
 
-        const file = getFile(path)
+        const file = await getFile(path)
         if (!file) return this.error.newError("The added file is invalid.")
 
         const data = await requester(`/app/${app_id}/commit`, {

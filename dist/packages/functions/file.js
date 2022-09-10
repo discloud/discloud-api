@@ -4,22 +4,20 @@ exports.streamtoBlob = exports.getFile = void 0;
 const fs_1 = require("fs");
 const undici_1 = require("undici");
 const buffer_1 = require("buffer");
-function getFile(path) {
-    let fileData;
+async function getFile(path) {
     try {
         if ((0, fs_1.existsSync)(path)) {
-            fileData = streamtoBlob(path);
+            const form = new undici_1.FormData();
+            form.append("file", await streamtoBlob(path), "file.zip");
+            return form;
         }
         else {
-            fileData = null;
+            return;
         }
     }
     catch (err) {
         return console.error(err);
     }
-    const form = new undici_1.FormData();
-    form.append('file', fileData);
-    return form;
 }
 exports.getFile = getFile;
 async function streamtoBlob(file) {
@@ -27,7 +25,7 @@ async function streamtoBlob(file) {
         const stream = await (0, fs_1.createReadStream)(file);
         const chunks = [];
         stream
-            .on("data", chunk => chunks.push(chunk))
+            .on("data", (chunk) => chunks.push(chunk))
             .once("end", () => resolve(new buffer_1.Blob(chunks)))
             .once("error", reject);
     });

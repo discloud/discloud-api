@@ -1,17 +1,19 @@
+import { BaseClass } from "../base/class";
 export interface GetApp {
     status: string;
     message: string;
-    apps: {
-        id: string;
-        online: boolean;
-        ramKilled: boolean;
-        ram: number;
-        mainFile: string;
-        lang: string;
-        mods: Object[];
-        autoDeployGit: string;
-        autoRestart: boolean;
-    };
+    apps: Apps | Apps[];
+}
+export interface Apps {
+    id: string;
+    online: boolean;
+    ramKilled: boolean;
+    ram: number;
+    mainFile: string;
+    lang: string;
+    mods: Object[];
+    autoDeployGit: string;
+    autoRestart: boolean;
 }
 export interface AppDeleteResponse {
     status: string;
@@ -45,10 +47,7 @@ export declare enum APP {
     Start = "start",
     Stop = "stop"
 }
-export declare class DiscloudApp {
-    private readonly token;
-    constructor(token: string);
-    private readonly error;
+export declare class DiscloudApp extends BaseClass {
     /**
     * @description Get data of a app.
     * @param {string} app_id ID of App
@@ -73,7 +72,7 @@ export declare class DiscloudApp {
     /**
     * @description Put a new ram value on App.
     * @param {String} app_id ID or SubDomain of App.
-    * @param {Number} ram Qunatity of Ram.
+    * @param {Number} ram Quantity of Ram.
     * @return {Promise<GenericMessage | void>}
     */
     ram(app_id: string, ram: number): Promise<GenericMessage | void>;

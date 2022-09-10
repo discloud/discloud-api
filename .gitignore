@@ -80,6 +80,7 @@ yarn.lock
 .next
 test.js
 test.ts
+tests/
 # Nuxt.js build / generate output
 .nuxt
 .vscode/
