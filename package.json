@@ -1,7 +1,7 @@
 {
   "name": "discloud-api",
-  "version": "1.0.4",
-  "description": "This is a unofficial package of Discloud API",
+  "version": "2.0.0-alpha.0",
+  "description": "This is the official package of Discloud API",
   "scripts": {
     "build": "npx tsc",
     "dev": "npx tsnd --respawn --transpile-only test.ts",
@@ -9,9 +9,17 @@
   },
   "main": "index.js",
   "author": "GardZock",
+  "contributors": [
+    "Gorniaky"
+  ],
+  "homepage": "https://github.com/discloud/discloud-api#readme",
+  "repository": "github:discloud/discloud-api",
   "license": "Apache-2.0",
   "dependencies": {
-    "axios": "^0.27.2"
+    "undici": "^5.10.0"
+  },
+  "engines": {
+    "node": ">=16.17.0"
   },
   "devDependencies": {
     "@types/jsdoc-to-markdown": "^7.0.3",
@@ -20,6 +28,8 @@
     "@typescript-eslint/parser": "^5.5.0",
     "eslint": "^8.3.0",
     "jsdoc-to-markdown": "^7.1.1",
+    "madge": "^5.0.1",
+    "semver": "^7.3.7",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.5.2"
   }

@@ -1,30 +1,35 @@
 {
   "name": "discloud-api",
-  "version": "1.0.3",
-  "description": "This is a unofficial package of Discloud API",
-  "main": "discloud-api.js",
+  "version": "2.0.0-alpha.0",
+  "description": "This is the official package of Discloud API",
+  "scripts": {
+    "build": "npx tsc",
+    "dev": "npx tsnd --respawn --transpile-only test.ts",
+    "tscd": "npx tsc --declaration"
+  },
+  "main": "index.js",
   "author": "GardZock",
+  "contributors": [
+    "Gorniaky"
+  ],
+  "homepage": "https://github.com/discloud/discloud-api#readme",
+  "repository": "github:discloud/discloud-api",
   "license": "Apache-2.0",
   "dependencies": {
-    "axios": "^0.27.2"
+    "undici": "^5.10.0"
   },
-  "types": "discloud-api.d.ts",
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=16.17.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GardZock/Discloud-API.git"
-  },
-  "bugs": {
-    "url": "https://github.com/GardZock/Discloud-API/issues"
-  },
-  "homepage": "https://github.com/GardZock/Discloud-API#readme",
-  "keywords": [
-    "discloud",
-    "discloud-api",
-    "open-source",
-    "bot",
-    "discord.js"
-  ]
+  "devDependencies": {
+    "@types/jsdoc-to-markdown": "^7.0.3",
+    "@types/node": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
+    "eslint": "^8.3.0",
+    "jsdoc-to-markdown": "^7.1.1",
+    "semver": "^7.3.7",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.5.2"
+  }
 }
